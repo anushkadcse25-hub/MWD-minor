@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Western Singers Collection - Tailwind CSS</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-200 min-h-screen">
+
+  <!-- ================= NAVBAR ================= -->
+
+  <nav class="bg-purple-700 text-white p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">WESTERN SINGERS</h1>
+
+      <div class="space-x-6">
+        <a href="#" class="hover:text-yellow-300">Home</a>
+        <a href="#" class="hover:text-yellow-300">Artists</a>
+        <a href="#" class="hover:text-yellow-300">Songs</a>
+        <a href="#" class="hover:text-yellow-300">Favorites</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HEADING ================= -->
+
+  <section class="text-center py-8">
+    <h2 class="text-3xl font-bold">Western Singers</h2>
+    <p class="text-gray-600">
+      🎵 Voices, Music, and Style: The World of Western Music
+    </p>
+  </section>
+
+  <!-- ================= CARD SECTION ================= -->
+
+  <section class="max-w-6xl mx-auto px-5">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <img
+          src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8"
+          alt="Taylor Swift"
+          class="w-full h-48 object-cover"
+        >
+
+        <div class="p-5">
+
+          <h3 class="text-xl font-bold mb-2">
+            Taylor Swift
+          </h3>
+
+          <p class="text-gray-600 mb-4">
+            A singer-songwriter known for her storytelling, powerful lyrics, and unforgettable melodies. 🎤✨
+          </p>
+
+          <button class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-bold px-6 py-3 rounded-full shadow-lg hover:from-purple-600 hover:via-pink-600 hover:to-rose-600 hover:scale-110 hover:shadow-2xl transition-all duration-500">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+
+      <!-- Card 2 -->
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <img
+          src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b"
+          alt="The Weeknd"
+          class="w-full h-48 object-cover"
+        >
+
+        <div class="p-5">
+
+          <h3 class="text-xl font-bold mb-2">
+            The Weeknd
+          </h3>
+
+          <p class="text-gray-600 mb-4">
+            Famous for his smooth vocals, atmospheric music, and unique blend of R&B and pop. 🌙🎶
+          </p>
+
+          <button class="bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white font-bold px-6 py-3 rounded-full shadow-md hover:from-red-600 hover:via-pink-600 hover:to-purple-700 hover:-translate-y-1 hover:rotate-2 hover:shadow-xl transition-all duration-700">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+
+      <!-- Card 3 -->
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <img
+          src="https://images.unsplash.com/photo-1516280440614-37939bbacd81"
+          alt="Ariana Grande"
+          class="w-full h-48 object-cover"
+        >
+
+        <div class="p-5">
+
+          <h3 class="text-xl font-bold mb-2">
+            Ariana Grande
+          </h3>
+
+          <p class="text-gray-600 mb-4">
+            Known for her impressive vocals, pop hits, and signature high notes that make every song special. 🎤💖
+          </p>
+
+          <button class="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 text-white font-bold px-6 py-3 rounded-full shadow-lg hover:from-purple-700 hover:via-pink-600 hover:to-rose-600 hover:scale-105 hover:animate-pulse hover:shadow-2xl transition-all duration-1000">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+
+      <!-- Card 4 -->
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <img
+          src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f"
+          alt="Billie Eilish"
+          class="w-full h-48 object-cover"
+        >
+
+        <div class="p-5">
+
+          <h3 class="text-xl font-bold mb-2">
+            Billie Eilish
+          </h3>
+
+          <p class="text-gray-600 mb-4">
+            An innovative artist recognized for her unique sound, emotional songs, and creative visual style. 🖤🎵
+          </p>
+
+          <button class="bg-gradient-to-r from-fuchsia-500 via-purple-500 to-violet-500 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:via-cyan-600 hover:to-teal-600 hover:scale-110 hover:shadow-2xl transition-all duration-500">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+
+      <!-- Card 5 -->
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <img
+          src="https://images.unsplash.com/photo-1506157786151-b8491531f063"
+          alt="Justin Bieber"
+          class="w-full h-48 object-cover"
+        >
+
+        <div class="p-5">
+
+          <h3 class="text-xl font-bold mb-2">
+            Justin Bieber
+          </h3>
+
+          <p class="text-gray-600 mb-4">
+            A global pop star known for catchy songs, smooth vocals, and a successful journey from teen sensation to superstar. 🎶⭐
+          </p>
+
+          <button class="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:via-cyan-600 hover:to-teal-600 hover:scale-110 hover:shadow-2xl transition-all duration-500">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+
+      <!-- Card 6 -->
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <img
+          src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b"
+          alt="Ed Sheeran"
+          class="w-full h-48 object-cover"
+        >
+
+        <div class="p-5">
+
+          <h3 class="text-xl font-bold mb-2">
+            Ed Sheeran
+          </h3>
+
+          <p class="text-gray-600 mb-4">
+            A talented singer-songwriter celebrated for heartfelt lyrics, acoustic melodies, and romantic songs. ❤️🎸
+          </p>
+
+          <button class="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:from-orange-600 hover:via-yellow-600 hover:to-red-600 hover:scale-110 hover:shadow-2xl transition-all duration-500">
+            Explore
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="mt-10 bg-gradient-to-r from-gray-900 via-slate-800 to-black text-white">
+
+    <div class="max-w-6xl mx-auto py-8 text-center">
+
+      <h2 class="text-2xl font-bold">
+        SB Jain Institute of Technology
+      </h2>
+
+      <p class="mt-2 text-gray-300">
+        Learning Modern Web Development using Tailwind CSS
+      </p>
+
+      <p class="mt-4 text-gray-400">
+        © 2026 All Rights Reserved
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ================= CLASS TABLE ================= -->
+
+  <section class="max-w-6xl mx-auto my-10 px-5">
+
+    <h2 class="text-3xl font-bold text-center mb-6">
+      Tailwind CSS Classes Used
+    </h2>
+
+    <table class="w-full border border-gray-400 border-collapse bg-white shadow-lg">
+
+      <thead>
+
+        <tr class="bg-purple-700 text-white">
+
+          <th class="border p-3">CSS Class Name</th>
+          <th class="border p-3">Meaning (Why Used?)</th>
+          <th class="border p-3">Description</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td class="border p-2">bg-gradient-to-br</td>
+          <td class="border p-2">Creates a diagonal background gradient</td>
+          <td class="border p-2">Makes the page background attractive.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">from-pink-100</td>
+          <td class="border p-2">Starting gradient color</td>
+          <td class="border p-2">Begins the gradient with light pink.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">via-purple-100</td>
+          <td class="border p-2">Middle gradient color</td>
+          <td class="border p-2">Creates a smooth transition between colors.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">to-indigo-200</td>
+          <td class="border p-2">Ending gradient color</td>
+          <td class="border p-2">Finishes the background with indigo.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">flex</td>
+          <td class="border p-2">Creates a Flexbox layout</td>
+          <td class="border p-2">Aligns navigation items horizontally.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">justify-between</td>
+          <td class="border p-2">Adds space between items</td>
+          <td class="border p-2">Places logo on the left and menu on the right.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">items-center</td>
+          <td class="border p-2">Centers items vertically</td>
+          <td class="border p-2">Keeps navigation items aligned.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">grid</td>
+          <td class="border p-2">Creates a Grid layout</td>
+          <td class="border p-2">Displays singer cards in rows and columns.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">grid-cols-1</td>
+          <td class="border p-2">One grid column</td>
+          <td class="border p-2">Used for mobile devices.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">md:grid-cols-2</td>
+          <td class="border p-2">Two columns on medium screens</td>
+          <td class="border p-2">Improves tablet layout.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">lg:grid-cols-3</td>
+          <td class="border p-2">Three columns on large screens</td>
+          <td class="border p-2">Displays three singer cards on desktops.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">rounded-lg</td>
+          <td class="border p-2">Rounds corners</td>
+          <td class="border p-2">Makes cards and buttons look modern.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">shadow-lg</td>
+          <td class="border p-2">Adds a large shadow</td>
+          <td class="border p-2">Highlights cards and buttons.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">overflow-hidden</td>
+          <td class="border p-2">Hides overflowing content</td>
+          <td class="border p-2">Keeps images inside the card boundaries.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">object-cover</td>
+          <td class="border p-2">Fits image without distortion</td>
+          <td class="border p-2">Ensures images fill their containers.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">font-bold</td>
+          <td class="border p-2">Makes text bold</td>
+          <td class="border p-2">Highlights important text and buttons.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">hover:scale-110</td>
+          <td class="border p-2">Enlarges element on hover</td>
+          <td class="border p-2">Creates an interactive zoom effect.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">hover:shadow-2xl</td>
+          <td class="border p-2">Increases shadow on hover</td>
+          <td class="border p-2">Makes the component stand out.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">hover:-translate-y-1</td>
+          <td class="border p-2">Moves element upward</td>
+          <td class="border p-2">Creates a lifting animation.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">hover:rotate-2</td>
+          <td class="border p-2">Rotates element slightly</td>
+          <td class="border p-2">Adds a playful hover effect.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">hover:animate-pulse</td>
+          <td class="border p-2">Applies pulse animation</td>
+          <td class="border p-2">Draws attention to the button.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">transition-all</td>
+          <td class="border p-2">Animates all supported properties</td>
+          <td class="border p-2">Provides smooth hover animations.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">duration-500</td>
+          <td class="border p-2">Animation duration</td>
+          <td class="border p-2">Controls how fast the animation completes.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">max-w-6xl</td>
+          <td class="border p-2">Sets maximum width</td>
+          <td class="border p-2">Keeps content centered and readable.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">mx-auto</td>
+          <td class="border p-2">Automatic horizontal margin</td>
+          <td class="border p-2">Centers the container horizontally.</td>
+        </tr>
+
+        <tr>
+          <td class="border p-2">min-h-screen</td>
+          <td class="border p-2">Minimum screen height</td>
+          <td class="border p-2">Ensures the background covers the full viewport.</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </section>
+
+</body>
+</html>
