@@ -1,0 +1,83 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Student Guide</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-indigo-900 flex items-center justify-center p-4">
+
+    <div class="bg-white/95 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96 border border-purple-200">
+
+        <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-3">
+             AI Student Guide
+        </h2>
+
+        <p class="text-center mb-6 text-gray-600">
+            Explore the world of Artificial Intelligence
+        </p>
+
+        <!-- FAQ 1 -->
+        <div class="mb-4">
+            <button class="question w-full text-left p-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg shadow-md hover:from-purple-700 hover:to-indigo-700 transition">
+                 What is Artificial Intelligence?
+            </button>
+
+            <p class="answer hidden p-4 bg-purple-50 text-gray-700 rounded-b-lg">
+                Artificial Intelligence is a technology that enables computers to perform tasks that normally require human intelligence.
+            </p>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="mb-4">
+            <button class="question w-full text-left p-4 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg shadow-md hover:from-indigo-700 hover:to-blue-700 transition">
+                 How can AI help students?
+            </button>
+
+            <p class="answer hidden p-4 bg-blue-50 text-gray-700 rounded-b-lg">
+                AI can help students understand concepts, generate ideas, summarize notes, and practice questions.
+            </p>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="mb-4">
+            <button class="question w-full text-left p-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg shadow-md hover:from-blue-700 hover:to-cyan-700 transition">
+                 What is Machine Learning?
+            </button>
+
+            <p class="answer hidden p-4 bg-cyan-50 text-gray-700 rounded-b-lg">
+                Machine Learning is a branch of AI where computers learn patterns from data and improve their performance over time.
+            </p>
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Get all questions
+        let questions = document.querySelectorAll(".question");
+
+        // Add click event to each question
+        questions.forEach(function(question) {
+
+            question.addEventListener("click", function() {
+
+                // Get the answer
+                let answer = question.nextElementSibling;
+
+                // Show / Hide answer
+                answer.classList.toggle("hidden");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
