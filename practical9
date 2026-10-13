@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal To-Do List</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100 font-[Poppins]">
+
+  <div class="max-w-3xl mx-auto px-4 py-10">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800">My To-Do List</h1>
+      <p class="text-gray-500 mt-2">Organize your academic and personal tasks</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="bg-white rounded-2xl shadow-xl p-6">
+
+      <!-- Add Task -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="Enter a new task..."
+          class="flex-1 px-4 py-3 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+
+        <select
+          id="categoryInput"
+          class="px-4 py-3 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="Academic">Academic</option>
+          <option value="Personal">Personal</option>
+        </select>
+
+        <button
+          onclick="addTask()"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition"
+        >
+          Add Task
+        </button>
+      </div>
+
+      <!-- Task Stats -->
+      <div class="grid grid-cols-3 gap-3 mb-6 text-center">
+        <div class="bg-indigo-50 rounded-xl p-3">
+          <p class="text-2xl font-bold text-indigo-600" id="totalTasks">0</p>
+          <p class="text-sm text-gray-500">Total</p>
+        </div>
+
+        <div class="bg-green-50 rounded-xl p-3">
+          <p class="text-2xl font-bold text-green-600" id="completedTasks">0</p>
+          <p class="text-sm text-gray-500">Completed</p>
+        </div>
+
+        <div class="bg-orange-50 rounded-xl p-3">
+          <p class="text-2xl font-bold text-orange-600" id="pendingTasks">0</p>
+          <p class="text-sm text-gray-500">Pending</p>
+        </div>
+      </div>
+
+      <!-- Task List -->
+      <div id="taskList" class="space-y-3"></div>
+
+      <!-- Empty Message -->
+      <div id="emptyMessage" class="text-center py-10 text-gray-400">
+        <p class="text-lg">No tasks yet</p>
+        <p class="text-sm mt-1">Add your first task above.</p>
+      </div>
+
+    </div>
+
+    <p class="text-center text-gray-400 text-sm mt-6">
+      Personal Task Manager
+    </p>
+
+  </div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const categoryInput = document.getElementById("categoryInput");
+
+      const taskText = taskInput.value.trim();
+
+      if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const task = {
+        id: Date.now(),
+        text: taskText,
+        category: categoryInput.value,
+        completed: false
+      };
+
+      tasks.push(task);
+      saveTasks();
+
+      taskInput.value = "";
+      renderTasks();
+    }
+
+    function toggleTask(id) {
+      tasks = tasks.map(task =>
+        task.id === id
+          ? { ...task, completed: !task.completed }
+          : task
+      );
+
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(task => task.id !== id);
+
+      saveTasks();
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      const emptyMessage = document.getElementById("emptyMessage");
+
+      taskList.innerHTML = "";
+
+      if (tasks.length === 0) {
+        emptyMessage.classList.remove("hidden");
+      } else {
+        emptyMessage.classList.add("hidden");
+      }
+
+      tasks.forEach(task => {
+        const taskElement = document.createElement("div");
+
+        taskElement.className =
+          "flex items-center gap-3 p-4 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition";
+
+        const categoryColor =
+          task.category === "Academic"
+            ? "bg-blue-100 text-blue-700"
+            : "bg-purple-100 text-purple-700";
+
+        taskElement.innerHTML = `
+          <input
+            type="checkbox"
+            ${task.completed ? "checked" : ""}
+            onchange="toggleTask(${task.id})"
+            class="w-5 h-5 accent-indigo-600 cursor-pointer"
+          >
+
+          <div class="flex-1 min-w-0">
+            <p class="font-medium break-words ${
+              task.completed
+                ? "line-through text-gray-400"
+                : "text-gray-800"
+            }">
+              ${escapeHTML(task.text)}
+            </p>
+
+            <span class="inline-block mt-1 px-2 py-1 text-xs font-medium rounded-full ${categoryColor}">
+              ${task.category}
+            </span>
+          </div>
+
+          <button
+            onclick="deleteTask(${task.id})"
+            class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition"
+            title="Delete task"
+          >
+            🗑️
+          </button>
+        `;
+
+        taskList.appendChild(taskElement);
+      });
+
+      updateStats();
+    }
+
+    function updateStats() {
+      const total = tasks.length;
+      const completed = tasks.filter(task => task.completed).length;
+      const pending = total - completed;
+
+      document.getElementById("totalTasks").textContent = total;
+      document.getElementById("completedTasks").textContent = completed;
+      document.getElementById("pendingTasks").textContent = pending;
+    }
+
+    function escapeHTML(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    document.getElementById("taskInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        addTask();
+      }
+    });
+
+    renderTasks();
+  </script>
+
+</body>
+</html>
