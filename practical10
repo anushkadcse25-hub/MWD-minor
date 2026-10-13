@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pocket Money Tracker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eceaf6;--card:#ffffff;--ink:#1d1b4b;--mute:#6b6a8a;--line:#d8d5ee;--accent:#2b2a8f;--onaccent:#fff;--ok:#1f8a4c;--bad:#c8372d;--track:#e3e0f3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12112b;--card:#1c1a40;--ink:#ecebff;--mute:#9a98c4;--line:#322f66;--accent:#a9a6ff;--onaccent:#12112b;--ok:#5fd18d;--bad:#ff7d72;--track:#2a2756}}
+:root[data-theme="dark"]{--bg:#12112b;--card:#1c1a40;--ink:#ecebff;--mute:#9a98c4;--line:#322f66;--accent:#a9a6ff;--onaccent:#12112b;--ok:#5fd18d;--bad:#ff7d72;--track:#2a2756}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;min-height:100vh}
+h1,h2,.num{font-family:'Bricolage Grotesque','Source Sans 3',system-ui,sans-serif}
+input,select{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.6rem .75rem;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px}
+.btn{background:var(--accent);color:var(--onaccent);border-radius:10px;padding:.65rem 1rem;font-weight:600}
+.chip{border:1px solid var(--line);border-radius:999px;padding:.25rem .8rem;font-size:.875rem;color:var(--mute)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--onaccent);border-color:var(--accent)}
+.bar{height:10px;border-radius:99px;background:var(--track);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+.pop{animation:pop .35s ease-out}@keyframes pop{from{transform:scale(.97);opacity:.5}}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}.pop{animation:none}}
+</style>
+</head>
+<body>
+<main class="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+  <header class="flex items-start justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Will my pocket money last till the 30th?</h1>
+      <p class="mt-2 max-w-xl" style="color:var(--mute)">Set this month's budget, log what you spend, and see how much you can safely spend each day.</p>
+    </div>
+    <button id="theme" class="chip shrink-0" aria-label="Switch light or dark theme">Theme</button>
+  </header>
+
+  <section class="card p-5 sm:p-7 mb-6" aria-live="polite">
+    <div class="grid sm:grid-cols-2 gap-6 items-center">
+      <div>
+        <p style="color:var(--mute)" id="verdictLabel">Safe to spend per day</p>
+        <p class="num text-6xl sm:text-7xl font-extrabold leading-none mt-1" id="daily">₹0</p>
+        <p class="mt-3" id="verdict"></p>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <div class="flex justify-between text-sm mb-1"><span id="spentTxt">Spent ₹0</span><span id="leftTxt" style="color:var(--mute)">₹0 left</span></div>
+          <div class="bar" role="progressbar" aria-label="Budget used" id="pbar" aria-valuemin="0" aria-valuemax="100"><i id="fill" style="width:0%"></i></div>
+        </div>
+        <label class="block text-sm">Monthly budget (₹)
+          <input id="budget" type="number" min="0" inputmode="numeric" class="mt-1">
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid lg:grid-cols-5 gap-6">
+    <section class="card p-5 lg:col-span-2 self-start">
+      <h2 class="text-xl font-extrabold mb-4">Add an expense</h2>
+      <div class="space-y-3">
+        <label class="block text-sm">Amount (₹)<input id="amt" type="number" min="1" inputmode="decimal" placeholder="e.g. 60" class="mt-1"></label>
+        <label class="block text-sm">Category
+          <select id="cat" class="mt-1"><option>Food</option><option>Travel</option><option>Study</option><option>Recharge</option><option>Fun</option><option>Other</option></select>
+        </label>
+        <label class="block text-sm">Note (optional)<input id="note" type="text" maxlength="40" placeholder="Canteen lunch" class="mt-1"></label>
+        <label class="block text-sm">Date<input id="date" type="date" class="mt-1"></label>
+        <p id="err" class="text-sm min-h-[1.25rem]" style="color:var(--bad)" role="alert"></p>
+        <button id="add" class="btn w-full">Add expense</button>
+      </div>
+      <h2 class="text-xl font-extrabold mt-8 mb-3">Where it went</h2>
+      <div id="breakdown" class="space-y-3"></div>
+    </section>
+
+    <section class="card p-5 lg:col-span-3">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-xl font-extrabold">This month's expenses</h2>
+        <button id="clear" class="text-sm underline" style="color:var(--mute)">Clear all</button>
+      </div>
+      <div id="filters" class="flex flex-wrap gap-2 mb-4" role="group" aria-label="Filter by category"></div>
+      <ul id="list" class="divide-y" style="--tw-divide-opacity:1;border-color:var(--line)"></ul>
+      <p id="empty" class="py-8 text-center hidden" style="color:var(--mute)">No expenses yet. Add your first one on the left.</p>
+    </section>
+  </div>
+</main>
+
+<script>
+const CATS=['Food','Travel','Study','Recharge','Fun','Other'];
+const ymd=d=>d.toISOString().slice(0,10);
+const inr=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const $=id=>document.getElementById(id);
+let state={budget:3000,items:[]},filter='All';
+
+function load(){try{const s=localStorage.getItem('pmt-v1');if(s)state=JSON.parse(s)}catch(e){}
+  try{const t=localStorage.getItem('pmt-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}
+function save(){try{localStorage.setItem('pmt-v1',JSON.stringify(state))}catch(e){}}
+
+const now=new Date(),monthKey=now.toISOString().slice(0,7);
+const daysLeft=new Date(now.getFullYear(),now.getMonth()+1,0).getDate()-now.getDate()+1;
+const monthItems=()=>state.items.filter(i=>i.date.startsWith(monthKey));
+
+function render(){
+  const items=monthItems(),spent=items.reduce((a,i)=>a+i.amt,0),left=state.budget-spent;
+  const pct=state.budget>0?Math.min(100,spent/state.budget*100):0;
+  $('budget').value=state.budget;
+  $('spentTxt').textContent='Spent '+inr(spent);
+  $('leftTxt').textContent=left>=0?inr(left)+' left':inr(-left)+' over budget';
+  $('fill').style.width=pct+'%';$('fill').style.background=left<0?'var(--bad)':'var(--accent)';
+  $('pbar').setAttribute('aria-valuenow',Math.round(pct));
+  const d=$('daily'),v=$('verdict');
+  if(left<0){d.textContent='₹0';d.style.color='var(--bad)';v.textContent='You are '+inr(-left)+' over this month\u2019s budget. Pause non-essential spending.'}
+  else{const per=left/daysLeft;d.textContent=inr(per);d.style.color='var(--ok)';
+    v.textContent=inr(left)+' left for '+daysLeft+' day'+(daysLeft>1?'s':'')+' (including today).'+(pct>80?' You have used over 80% already, so go easy.':'')}
+  d.classList.remove('pop');void d.offsetWidth;d.classList.add('pop');
+
+  $('breakdown').innerHTML=CATS.map(c=>{const t=items.filter(i=>i.cat===c).reduce((a,i)=>a+i.amt,0);
+    const w=spent?t/spent*100:0;
+    return `<div><div class="flex justify-between text-sm mb-1"><span>${c}</span><span>${inr(t)}</span></div><div class="bar"><i style="width:${w}%"></i></div></div>`}).join('');
+
+  $('filters').innerHTML=['All',...CATS].map(c=>`<button class="chip" data-f="${c}" aria-pressed="${c===filter}">${c}</button>`).join('');
+  const shown=items.filter(i=>filter==='All'||i.cat===filter).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  $('empty').classList.toggle('hidden',shown.length>0);
+  $('list').innerHTML=shown.map(i=>`<li class="flex items-center justify-between gap-3 py-3">
+    <div class="min-w-0"><p class="font-semibold truncate">${esc(i.note||i.cat)}</p><p class="text-sm" style="color:var(--mute)">${i.cat}, ${new Date(i.date+'T00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</p></div>
+    <div class="flex items-center gap-3"><span class="num font-extrabold">${inr(i.amt)}</span>
+    <button class="chip" data-del="${i.id}" aria-label="Delete expense ${esc(i.note||i.cat)}">Delete</button></div></li>`).join('');
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+$('add').onclick=()=>{
+  const amt=parseFloat($('amt').value),date=$('date').value;
+  if(!(amt>0)){$('err').textContent='Enter an amount greater than 0.';$('amt').focus();return}
+  if(!date){$('err').textContent='Pick a date for this expense.';return}
+  $('err').textContent='';
+  state.items.push({id:Date.now(),amt,cat:$('cat').value,note:$('note').value.trim(),date});
+  $('amt').value='';$('note').value='';save();render();$('amt').focus();
+};
+$('budget').oninput=e=>{state.budget=Math.max(0,parseFloat(e.target.value)||0);save();render();$('budget').focus()};
+$('list').onclick=e=>{const id=e.target.dataset.del;if(id){state.items=state.items.filter(i=>i.id!=id);save();render()}};
+$('filters').onclick=e=>{if(e.target.dataset.f){filter=e.target.dataset.f;render()}};
+$('clear').onclick=()=>{if(confirm('Delete all expenses for this month?')){state.items=state.items.filter(i=>!i.date.startsWith(monthKey));save();render()}};
+$('theme').onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+  r.dataset.theme=dark?'light':'dark';try{localStorage.setItem('pmt-theme',r.dataset.theme)}catch(e){}};
+$('date').value=ymd(now);
+load();render();
+</script>
+</body>
+</html>
